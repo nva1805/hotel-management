@@ -1,22 +1,35 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Hotel Management System
 
-## Getting Started
+Hệ thống quản lý khách sạn nhỏ với các tính năng đầy đủ cho một người quản lý kiêm lễ tân.
 
-First, run the development server:
+## Tính năng
+
+- **Trang Dashboard**: Hiển thị trạng thái phòng, ghi chú và yêu cầu dịch vụ
+- **Đặt phòng**: Tìm phòng trống và đặt phòng cho khách
+- **Check-in/Check-out**: Quản lý việc nhận và trả phòng
+- **Quản lý khách hàng**: Lưu trữ thông tin khách và lịch sử lưu trú
+- **Hóa đơn**: Tạo và quản lý hóa đơn
+- **Báo cáo**: Thống kê doanh thu và tỷ lệ lấp đầy phòng
+- **Cài đặt**: Cấu hình loại phòng, giá phòng, và các tùy chọn khác
+
+## Công nghệ sử dụng
+
+- **Frontend**: Next.js + TypeScript + Tailwind CSS
+- **Quản lý trạng thái**: Zustand
+- **UI Components**: FullCalendar, Headless UI
+- **API**: Axios
+
+## Cài đặt
 
 ```bash
+# Cài đặt dependencies
+npm install
+
+# Khởi động server development
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Truy cập [http://localhost:3000](http://localhost:3000) để sử dụng ứng dụng.
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 

@@ -1,0 +1,17 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "type": "shell",
+        "command": "npm",
+        "args": ["run", "dev"],
+        "label": "Start Development Server",
+        "group": {
+          "kind": "build",
+          "isDefault": true
+        },
+        "problemMatcher": ["$tsc-watch"],
+        "isBackground": true
+      }
+    ]
+}
