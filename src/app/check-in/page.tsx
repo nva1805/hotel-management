@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 import DashboardLayout from '@/components/layout/DashboardLayout';
 import { useHotelStore } from '@/store';
 import Button from '@/components/common/Button';
-import { Booking } from '@/types';
 
 export default function CheckIn() {
   const { bookings, fetchBookings, checkIn } = useHotelStore();

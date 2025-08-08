@@ -1,6 +1,18 @@
 import { create } from 'zustand';
-import { Room, Customer, Booking, RoomStatus, Invoice, Partner, Expense, HotelSettings } from '@/types';
-import { getRooms, getCustomers, getBookings, getInvoices, getPartners, getExpenses, getSettings } from '@/services/api';
+import { 
+  Room, 
+  Customer, 
+  Booking, 
+  RoomStatus, 
+  Invoice, 
+  Partner, 
+  Expense, 
+  HotelSettings
+} from '@/types';
+import { 
+  getRooms, getCustomers, getBookings, getInvoices, getPartners, 
+  getExpenses, getSettings
+} from '@/services/api';
 
 interface HotelState {
   // Room management
@@ -49,6 +61,7 @@ export const useHotelStore = create<HotelState>((set, get) => ({
     const rooms = await getRooms();
     set({ rooms });
   },
+
   updateRoomStatus: (roomId: string, status: RoomStatus) => {
     set((state) => ({
       rooms: state.rooms.map((room) =>
