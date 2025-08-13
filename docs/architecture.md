@@ -74,9 +74,9 @@ hotel-management/
 
 ### 3. Mô hình dữ liệu
 Các interface chính được định nghĩa trong `src/types/index.ts`:
-- `Room`: Thông tin và trạng thái phòng
+- `Room`: Thông tin và trạng thái phòng, bao gồm tham chiếu đến booking hiện tại (nếu có) và trạng thái thanh toán
 - `Customer`: Thông tin khách hàng
-- `Booking`: Thông tin đặt phòng
+- `Booking`: Thông tin đặt phòng, bao gồm trạng thái thanh toán (đã thanh toán, chưa thanh toán, đã đặt cọc)
 - `Invoice`: Hóa đơn
 - `Partner`: Đối tác dịch vụ
 - `Expense`: Chi phí và điều chỉnh

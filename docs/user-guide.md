@@ -15,6 +15,11 @@ Dashboard hiển thị tổng quan về tất cả các phòng trong khách sạ
   - Đỏ: Đang bảo trì
   - Vàng: Đang dọn dẹp
 
+- **Xem trạng thái thanh toán**: Đối với phòng đã đặt hoặc đang ở, có thêm nhãn trạng thái thanh toán:
+  - Xanh lá: Đã thanh toán
+  - Đỏ: Chưa thanh toán
+  - Vàng: Đã cọc (hiển thị số tiền cọc)
+
 - **Thao tác với phòng**: Nhấp vào bất kỳ phòng nào để xem chi tiết và thực hiện các thao tác:
   - Thay đổi trạng thái phòng
   - Thêm ghi chú cho phòng

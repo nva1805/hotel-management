@@ -1,49 +1,21 @@
 import { RoomStatus } from '@/types';
+import Badge from '@/components/common/Badge';
+import { ROOM_STATUS_STYLES, ROOM_STATUS_TEXT } from '@/constants/styles';
 
 interface StatusBadgeProps {
   status: RoomStatus;
+  className?: string;
 }
 
-export default function RoomStatusBadge({ status }: StatusBadgeProps) {
-  const getStatusStyles = () => {
-    switch (status) {
-      case RoomStatus.VACANT:
-        return 'bg-green-100 text-green-800';
-      case RoomStatus.BOOKED:
-        return 'bg-blue-100 text-blue-800';
-      case RoomStatus.OCCUPIED:
-        return 'bg-purple-100 text-purple-800';
-      case RoomStatus.MAINTENANCE:
-        return 'bg-red-100 text-red-800';
-      case RoomStatus.CLEANING:
-        return 'bg-yellow-100 text-yellow-800';
-      default:
-        return 'bg-gray-100 text-gray-800';
-    }
-  };
-
-  const getStatusText = () => {
-    switch (status) {
-      case RoomStatus.VACANT:
-        return 'Trống';
-      case RoomStatus.BOOKED:
-        return 'Đã đặt';
-      case RoomStatus.OCCUPIED:
-        return 'Đang ở';
-      case RoomStatus.MAINTENANCE:
-        return 'Bảo trì';
-      case RoomStatus.CLEANING:
-        return 'Đang dọn';
-      default:
-        return 'Không xác định';
-    }
-  };
+export default function RoomStatusBadge({ status, className = '' }: StatusBadgeProps) {
+  const statusStyle = ROOM_STATUS_STYLES[status] || 'bg-gray-100 text-gray-800';
+  const statusText = ROOM_STATUS_TEXT[status] || 'Không xác định';
 
   return (
-    <span
-      className={`px-2.5 py-0.5 rounded-md text-xs font-medium ${getStatusStyles()}`}
-    >
-      {getStatusText()}
-    </span>
+    <Badge
+      text={statusText}
+      colorStyle={statusStyle}
+      className={className}
+    />
   );
 }

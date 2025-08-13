@@ -12,6 +12,13 @@ export enum BookingType {
   HOURLY = 'hourly',
 }
 
+// Payment status types
+export enum PaymentStatus {
+  PAID = 'paid',
+  UNPAID = 'unpaid',
+  DEPOSIT = 'deposit',
+}
+
 // Room interface
 export interface Room {
   id: string;
@@ -61,12 +68,14 @@ export interface Booking {
   status: 'confirmed' | 'checked-in' | 'checked-out' | 'cancelled';
   bookingType: BookingType;
   price: number;
-  notes?: string;
+  notes?: string[];
   createdAt: Date;
   updatedAt: Date;
   earlyCheckIn?: boolean;
   lateCheckOut?: boolean;
   additionalCharges?: AdditionalCharge[];
+  paymentStatus: PaymentStatus;
+  depositAmount?: number;
 }
 
 // Additional charge interface

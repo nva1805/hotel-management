@@ -2,7 +2,7 @@ import axios from 'axios';
 import { Room, Customer, Booking, Invoice, Partner, Expense, HotelSettings } from '@/types';
 import { mockRooms } from '@/mock/rooms';
 import { mockCustomers } from '@/mock/customers';
-import { mockBookings } from '@/mock/bookings';
+import mockBookings from '@/mock/bookings';
 import { mockInvoices } from '@/mock/invoices';
 import { mockPartners } from '@/mock/partners';
 import { mockExpenses } from '@/mock/expenses';

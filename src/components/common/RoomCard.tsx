@@ -1,5 +1,6 @@
 import { Room, RoomStatus } from '@/types';
 import RoomStatusBadge from '@/components/room/RoomStatusBadge';
+import PaymentStatusBadge from '@/components/room/PaymentStatusBadge';
 
 interface RoomCardProps {
   room: Room;
@@ -36,6 +37,11 @@ export default function RoomCard({ room, onClick, className = '' }: RoomCardProp
     }
   };
 
+  // Check if payment badge should be displayed
+  const shouldShowPaymentBadge = 
+    (room.status === RoomStatus.OCCUPIED || room.status === RoomStatus.BOOKED) && 
+    room.currentBooking;
+
   return (
     <div 
       className={`
@@ -46,9 +52,17 @@ export default function RoomCard({ room, onClick, className = '' }: RoomCardProp
       `}
       onClick={handleClick}
     >
-      <div className="flex justify-between items-center mb-2">
+      <div className="flex justify-between items-start mb-2">
         <h3 className="text-lg font-semibold">Phòng {room.name}</h3>
-        <RoomStatusBadge status={room.status} />
+        <div className="flex flex-col gap-1">
+          <RoomStatusBadge status={room.status} />
+          {shouldShowPaymentBadge && room.currentBooking && (
+            <PaymentStatusBadge 
+              status={room.currentBooking.paymentStatus} 
+              depositAmount={room.currentBooking.paymentStatus === 'deposit' ? 500000 : undefined}
+            />
+          )}
+        </div>
       </div>
       <div className="text-sm text-gray-500">
         <p>{room.type} - {room.capacity} người</p>

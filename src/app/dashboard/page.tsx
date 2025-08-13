@@ -75,10 +75,10 @@ export default function Dashboard() {
                   <h2 className="text-xl font-semibold mb-4">Tầng {floor}</h2>
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                     {floorRooms.map((room) => (
-                      <RoomCard 
-                        key={room.id} 
-                        room={room} 
-                        onClick={handleRoomClick} 
+                      <RoomCard
+                        key={room.id}
+                        room={room}
+                        onClick={handleRoomClick}
                       />
                     ))}
                   </div>
