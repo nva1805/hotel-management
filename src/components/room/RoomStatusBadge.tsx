@@ -1,20 +1,20 @@
 import { RoomStatus } from '@/types';
-import Badge from '@/components/common/Badge';
-import { ROOM_STATUS_STYLES, ROOM_STATUS_TEXT } from '@/constants/styles';
+import StatusBadge from '@/components/common/StatusBadge';
 
-interface StatusBadgeProps {
+interface RoomStatusBadgeProps {
   status: RoomStatus;
   className?: string;
 }
 
-export default function RoomStatusBadge({ status, className = '' }: StatusBadgeProps) {
-  const statusStyle = ROOM_STATUS_STYLES[status] || 'bg-gray-100 text-gray-800';
-  const statusText = ROOM_STATUS_TEXT[status] || 'Không xác định';
-
+/**
+ * RoomStatusBadge component for displaying room status
+ * This is a wrapper around StatusBadge for backward compatibility
+ */
+export default function RoomStatusBadge({ status, className = '' }: RoomStatusBadgeProps) {
   return (
-    <Badge
-      text={statusText}
-      colorStyle={statusStyle}
+    <StatusBadge
+      statusKey={status}
+      statusType="room"
       className={className}
     />
   );

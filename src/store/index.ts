@@ -3,7 +3,8 @@ import {
   Room, 
   Customer, 
   Booking, 
-  RoomStatus, 
+  RoomStatus,
+  BookingStatus,
   Invoice, 
   Partner, 
   Expense, 
@@ -79,25 +80,11 @@ export const useHotelStore = create<HotelState>((set, get) => ({
     }));
   },
   addServiceRequest: (roomId: string, description: string) => {
-    set((state) => ({
-      rooms: state.rooms.map((room) =>
-        room.id === roomId
-          ? {
-              ...room,
-              serviceRequests: [
-                ...(room.serviceRequests || []),
-                {
-                  id: Date.now().toString(),
-                  roomId,
-                  description,
-                  createdAt: new Date(),
-                  status: 'pending',
-                },
-              ],
-            }
-          : room
-      ),
-    }));
+    // Since serviceRequests are no longer part of the Room interface,
+    // we should implement this with a separate serviceRequests state
+    // For now, we'll keep the function signature but leave it as a stub
+    console.log(`Adding service request to room ${roomId}: ${description}`);
+    // Implementation would need a separate serviceRequests state
   },
 
   // Customer management
@@ -154,8 +141,7 @@ export const useHotelStore = create<HotelState>((set, get) => ({
       bookings: [...state.bookings, newBooking],
     }));
     
-    // Update the room status
-    get().updateRoomStatus(bookingData.roomId, RoomStatus.BOOKED);
+    // Room status doesn't change automatically - we need to handle this separately
     
     return newBooking;
   },
@@ -163,22 +149,28 @@ export const useHotelStore = create<HotelState>((set, get) => ({
     set((state) => ({
       bookings: state.bookings.map((booking) =>
         booking.id === bookingId
-          ? { ...booking, status: 'checked-in', updatedAt: new Date() }
+          ? { 
+              ...booking, 
+              status: BookingStatus.CHECKED_IN, 
+              actualCheckIn: new Date(),
+              updatedAt: new Date() 
+            }
           : booking
       ),
     }));
     
-    // Get the room ID from the booking and update its status
-    const booking = get().bookings.find((b) => b.id === bookingId);
-    if (booking) {
-      get().updateRoomStatus(booking.roomId, RoomStatus.OCCUPIED);
-    }
+    // Room status doesn't change automatically since we separated room and booking concerns
   },
   checkOut: async (bookingId: string) => {
     set((state) => ({
       bookings: state.bookings.map((booking) =>
         booking.id === bookingId
-          ? { ...booking, status: 'checked-out', updatedAt: new Date() }
+          ? { 
+              ...booking, 
+              status: BookingStatus.CHECKED_OUT, 
+              actualCheckOut: new Date(),
+              updatedAt: new Date() 
+            }
           : booking
       ),
     }));
@@ -193,16 +185,12 @@ export const useHotelStore = create<HotelState>((set, get) => ({
     set((state) => ({
       bookings: state.bookings.map((booking) =>
         booking.id === bookingId
-          ? { ...booking, status: 'cancelled', updatedAt: new Date() }
+          ? { ...booking, status: BookingStatus.CANCELLED, updatedAt: new Date() }
           : booking
       ),
     }));
     
-    // Get the room ID from the booking and update its status
-    const booking = get().bookings.find((b) => b.id === bookingId);
-    if (booking) {
-      get().updateRoomStatus(booking.roomId, RoomStatus.VACANT);
-    }
+    // Room status doesn't change automatically since we separated room and booking concerns
   },
 
   // Invoice management

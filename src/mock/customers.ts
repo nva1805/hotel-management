@@ -59,7 +59,7 @@ export const mockCustomers: Customer[] = [
     address: 'Hải Phòng',
     idNumber: '234567891',
     idType: 'CCCD',
-    notes: 'Khách VIP',
+    notes: ['Khách VIP'],
     visits: 8,
     createdAt: new Date('2022-08-17'),
     updatedAt: new Date('2023-07-01'),

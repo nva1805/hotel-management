@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { Room, Customer, Booking, Invoice, Partner, Expense, HotelSettings } from '@/types';
-import { mockRooms } from '@/mock/rooms';
+import { rooms } from '@/mock/rooms';
 import { mockCustomers } from '@/mock/customers';
-import mockBookings from '@/mock/bookings';
+import { bookings } from '@/mock';
 import { mockInvoices } from '@/mock/invoices';
 import { mockPartners } from '@/mock/partners';
 import { mockExpenses } from '@/mock/expenses';
@@ -41,7 +41,7 @@ export const getRooms = async (): Promise<Room[]> => {
   // return api.get('/rooms').then(response => response.data);
   
   // For now, return mock data
-  return Promise.resolve(mockRooms);
+  return Promise.resolve(rooms);
 };
 
 export const getCustomers = async (): Promise<Customer[]> => {
@@ -57,7 +57,7 @@ export const getBookings = async (): Promise<Booking[]> => {
   // return api.get('/bookings').then(response => response.data);
   
   // For now, return mock data
-  return Promise.resolve(mockBookings);
+  return Promise.resolve(bookings);
 };
 
 export const getInvoices = async (): Promise<Invoice[]> => {

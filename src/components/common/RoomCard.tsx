@@ -1,4 +1,4 @@
-import { Room, RoomStatus } from '@/types';
+import { Room, RoomStatus, BookingStatus, PaymentStatus } from '@/types';
 import RoomStatusBadge from '@/components/room/RoomStatusBadge';
 import PaymentStatusBadge from '@/components/room/PaymentStatusBadge';
 
@@ -6,22 +6,23 @@ interface RoomCardProps {
   room: Room;
   onClick?: (room: Room) => void;
   className?: string;
+  currentBooking?: {
+    status: BookingStatus;
+    paymentStatus: PaymentStatus;
+    depositAmount?: number;
+  };
 }
 
 /**
  * Reusable RoomCard component to display room information
  * Can be used in dashboard and other places
  */
-export default function RoomCard({ room, onClick, className = '' }: RoomCardProps) {
+export default function RoomCard({ room, onClick, className = '', currentBooking }: RoomCardProps) {
   // Get background color based on room status
   const getStatusBackground = () => {
     switch (room.status) {
       case RoomStatus.VACANT:
         return 'bg-green-50 border border-green-200';
-      case RoomStatus.BOOKED:
-        return 'bg-blue-50 border border-blue-200';
-      case RoomStatus.OCCUPIED:
-        return 'bg-purple-50 border border-purple-200';
       case RoomStatus.MAINTENANCE:
         return 'bg-red-50 border border-red-200';
       case RoomStatus.CLEANING:
@@ -38,9 +39,7 @@ export default function RoomCard({ room, onClick, className = '' }: RoomCardProp
   };
 
   // Check if payment badge should be displayed
-  const shouldShowPaymentBadge = 
-    (room.status === RoomStatus.OCCUPIED || room.status === RoomStatus.BOOKED) && 
-    room.currentBooking;
+  const shouldShowPaymentBadge = currentBooking !== undefined;
 
   return (
     <div 
@@ -56,10 +55,10 @@ export default function RoomCard({ room, onClick, className = '' }: RoomCardProp
         <h3 className="text-lg font-semibold">Phòng {room.name}</h3>
         <div className="flex flex-col gap-1">
           <RoomStatusBadge status={room.status} />
-          {shouldShowPaymentBadge && room.currentBooking && (
+          {shouldShowPaymentBadge && currentBooking && (
             <PaymentStatusBadge 
-              status={room.currentBooking.paymentStatus} 
-              depositAmount={room.currentBooking.paymentStatus === 'deposit' ? 500000 : undefined}
+              status={currentBooking.paymentStatus} 
+              depositAmount={currentBooking.paymentStatus === PaymentStatus.DEPOSIT ? currentBooking.depositAmount : undefined}
             />
           )}
         </div>
@@ -71,13 +70,6 @@ export default function RoomCard({ room, onClick, className = '' }: RoomCardProp
         <div className="mt-2">
           <span className="text-xs font-medium text-gray-500">
             {room.notes.length} ghi chú
-          </span>
-        </div>
-      )}
-      {(room.serviceRequests && room.serviceRequests.length > 0) && (
-        <div className="mt-1">
-          <span className="text-xs font-medium text-amber-600">
-            {room.serviceRequests.filter(req => req.status !== 'completed').length} yêu cầu dịch vụ
           </span>
         </div>
       )}

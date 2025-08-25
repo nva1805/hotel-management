@@ -1,15 +1,32 @@
-// Room status types
+// Room status types - Chỉ giữ lại trạng thái vật lý của phòng
 export enum RoomStatus {
   VACANT = 'vacant',
-  BOOKED = 'booked',
-  OCCUPIED = 'occupied',
   MAINTENANCE = 'maintenance',
   CLEANING = 'cleaning',
 }
 
+// Booking type enum
 export enum BookingType {
   NIGHTLY = 'nightly',
   HOURLY = 'hourly',
+}
+
+// Booking status enum
+export enum BookingStatus {
+  CONFIRMED = 'confirmed',
+  CHECKED_IN = 'checked-in',
+  CHECKED_OUT = 'checked-out',
+  CANCELLED = 'cancelled',
+}
+
+// Booking source enum
+export enum BookingSource {
+  WALK_IN = 'walk-in',
+  AGODA = 'agoda',
+  BOOKING_COM = 'booking.com',
+  TRAVELOKA = 'traveloka',
+  AIRBNB = 'airbnb',
+  OTHER = 'other',
 }
 
 // Payment status types
@@ -19,7 +36,7 @@ export enum PaymentStatus {
   DEPOSIT = 'deposit',
 }
 
-// Room interface
+// Room interface - Chỉ chứa thông tin tĩnh của phòng
 export interface Room {
   id: string;
   name: string;
@@ -28,7 +45,6 @@ export interface Room {
   defaultPrice: number;
   capacity: number;
   notes?: string[];
-  serviceRequests?: ServiceRequest[];
   floor?: number;
 }
 
@@ -52,39 +68,58 @@ export interface Customer {
   address?: string;
   idNumber?: string;
   idType?: string;
-  notes?: string;
+  notes?: string[];
   visits: number;
   createdAt: Date;
   updatedAt: Date;
 }
 
-// Booking interface
+// Booking interface - Chứa thông tin đã chốt tại thời điểm đặt phòng
 export interface Booking {
   id: string;
   roomId: string;
   customerId: string;
   checkInDate: Date;
   checkOutDate: Date;
-  status: 'confirmed' | 'checked-in' | 'checked-out' | 'cancelled';
+  actualCheckIn?: Date;
+  actualCheckOut?: Date;
+  status: BookingStatus;
+  source: BookingSource;
   bookingType: BookingType;
   price: number;
   notes?: string[];
   createdAt: Date;
   updatedAt: Date;
-  earlyCheckIn?: boolean;
-  lateCheckOut?: boolean;
-  additionalCharges?: AdditionalCharge[];
   paymentStatus: PaymentStatus;
   depositAmount?: number;
+  additionalCharges?: AdditionalCharge[];
 }
 
-// Additional charge interface
+// Additional charge types
+export enum AdditionalChargeType {
+  EARLY_CHECK_IN = 'early-check-in',
+  LATE_CHECK_OUT = 'late-check-out',
+  ROOM_SERVICE = 'room-service',
+  MINI_BAR = 'mini-bar',
+  DAMAGE = 'damage',
+  LAUNDRY = 'laundry',
+  EXTRA_BED = 'extra-bed',
+  EXTRA_SERVICE = 'extra-service',
+  OTHER = 'other'
+}
+
+// Additional charge interface - Chứa thông tin phụ thu hoặc dịch vụ phát sinh
 export interface AdditionalCharge {
   id: string;
   bookingId: string;
+  type: AdditionalChargeType;
   description: string;
   amount: number;
   date: Date;
+  staffId: string;
+  paymentStatus: PaymentStatus;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 // Invoice interface

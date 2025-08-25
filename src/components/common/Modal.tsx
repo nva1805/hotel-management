@@ -1,5 +1,5 @@
 import { Dialog, Transition } from '@headlessui/react';
-import { Fragment, ReactNode } from 'react';
+import { Fragment, ReactNode, useRef } from 'react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 
 interface ModalProps {
@@ -8,6 +8,8 @@ interface ModalProps {
   title: string;
   children: ReactNode;
   size?: 'sm' | 'md' | 'lg' | 'xl';
+  initialFocus?: React.MutableRefObject<HTMLElement | null>;
+  description?: string;
 }
 
 export default function Modal({
@@ -16,7 +18,11 @@ export default function Modal({
   title,
   children,
   size = 'md',
+  initialFocus,
+  description,
 }: ModalProps) {
+  const closeButtonRef = useRef(null);
+  
   const sizeClasses = {
     sm: 'max-w-md',
     md: 'max-w-lg',
@@ -26,7 +32,13 @@ export default function Modal({
 
   return (
     <Transition appear show={isOpen} as={Fragment}>
-      <Dialog as="div" className="relative z-10" onClose={onClose}>
+      <Dialog 
+        as="div" 
+        className="relative z-10" 
+        onClose={onClose}
+        initialFocus={initialFocus || closeButtonRef}
+      >
+        {/* Backdrop overlay */}
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
@@ -36,9 +48,10 @@ export default function Modal({
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="fixed inset-0 bg-black/80" />
+          <div className="fixed inset-0 bg-black/80" aria-hidden="true" />
         </Transition.Child>
 
+        {/* Full-screen container to center the panel */}
         <div className="fixed inset-0 overflow-y-auto">
           <div className="flex min-h-full items-center justify-center p-4 text-center">
             <Transition.Child
@@ -57,15 +70,29 @@ export default function Modal({
                   <Dialog.Title as="h3" className="text-lg font-medium leading-6 text-gray-900">
                     {title}
                   </Dialog.Title>
-                  <button
+                  
+                  {/* Description for accessibility */}
+                  {description && (
+                    <Dialog.Description className="sr-only">
+                      {description}
+                    </Dialog.Description>
+                  )}
+                                    <button
+                    ref={closeButtonRef}
                     type="button"
-                    className="text-gray-400 hover:text-gray-500"
+                    className="bg-white rounded-md text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
                     onClick={onClose}
                   >
+                    <span className="sr-only">Close</span>
                     <XMarkIcon className="h-6 w-6" aria-hidden="true" />
                   </button>
                 </div>
-                <div className="mt-2">{children}</div>
+                
+                <div className="mt-2">
+                  {children}
+                </div>
+                
+                {/* Optional footer actions could be added here */}
               </Dialog.Panel>
             </Transition.Child>
           </div>
